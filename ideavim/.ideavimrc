@@ -1,0 +1,169 @@
+let mapleader=" "
+
+""" Plugins  --------------------------------
+set surround
+set multiple-cursors
+set commentary
+set argtextobj
+" set easymotion
+set textobj-entire
+set ReplaceWithRegister
+set exchange
+set NERDTree
+set peekaboo
+" set sneak
+" Trying the new syntax
+Plug 'machakann/vim-highlightedyank'
+
+""" Plugin settings -------------------------
+let g:argtextobj_pairs="[:],(:),<:>"
+
+" <C-n> seems to me as a better solution than <M-n>,
+" but we should finally support vim-visual-multi because vim-multiple-cursors is deprecated now
+" map <C-n> <Plu>NextWholeOccurrence
+
+
+""" Common settings -------------------------
+set showmo
+set so=5
+set incsearch
+set nu
+" set clipboard=unnamed
+" set clipboard+=ideaput
+set clipboard^=unnamedplus,unnamed
+set ignorecase smartcase
+set hlsearch
+set relativenumber
+set noideadelaymacro
+
+" Idea specific settings ------------------
+set ideastatusicon=gray
+set ideamarks
+
+" Keys from vim-gitgutter
+nmap ]c <Action>(VcsShowNextChangeMarker)
+nmap [c <Action>(VcsShowPrevChangeMarker)
+" Not from vim-gitgutter. ={motion} is for indenting. =c does nothing
+nmap =c <Action>(VcsShowCurrentChangeMarker)
+
+""" My Mappings -----------------------------
+" map <leader>f <Plug>(easymotion-s)
+" map <leader>e <Plug>(easymotion-f)
+
+map <leader>d <Action>(Debug)
+map grn <Action>(RenameElement)
+map <leader>c <Action>(Stop)
+map <leader>z <Action>(ToggleDistractionFreeMode)
+
+nmap <leader>ss <Action>(ShowUsages)
+map <leader>a <Action>(Annotate)
+nmap <leader>h <Action>(HighlightUsagesInFile)
+nmap <leader>n <Action>(ReSharperNavigateTo)
+map <leader>j <ESC>:action GotoNextError<CR>
+map <leader>k <ESC>:action GotoPreviousError<CR>
+
+" Reformat the current line only
+map <leader>l V<Action>(ReformatCode)
+
+map <leader>bb <Action>(ToggleLineBreakpoint)
+map <leader>sp <Action>(FileStructurePopup)
+" noremap <leader>t <ESC>:action Refactorings.QuickListPopupAction<CR>
+noremap <leader>u <ESC>:action FindUsages<CR>
+noremap <leader>o <ESC>:action ShowFilePath<CR>
+nmap <leader>v <Action>(Vcs.QuickListPopupAction)
+nmap <leader>x <Action>(HideAllWindows)
+noremap <leader>gg <ESC>:action Generate<CR>
+nmap ss <Action>(flash.search)
+xmap ss <Action>(flash.search)
+
+" CamelCaseMotion approximation (obsolete with proper CamelCaseMotoin plugin)
+" Missing inner word motions e.g. i<leader>w
+nmap <leader>w [w
+nmap <leader>b [b
+nmap <leader>e ]w
+nmap <leader>ge ]b
+
+map <leader>J Ji <ESC>
+" Just makes me nervous
+map H h
+
+" Toggle case and start typing. E.g. `<leader>get`: `property` -> `getProperty`
+map <leader>i ~hi
+" Remove selection and toggle case. E.g. `v2l<leader>u`: `getProperty` -> `property`
+vmap <leader>u d~h
+
+" I think it's a better solution
+map U <C-R>
+inoremap jj <ESC>
+nnoremap <silent> <BS> <BS>:nohlsearch<CR>
+
+"self mapper
+nnoremap <c-t> :action ActivateTerminalToolWindow<CR>
+noremap <leader>` <ESC>:action SelectInProjectView<CR>
+map <Leader>sa ggVG
+" 选中并高亮最后一次插入的内
+map <A-M>  <A-N>
+
+nmap gw <Action>(RecentFiles)
+nmap gl <Action>(QuickJavaDoc)
+nmap gL <Action>(QuickImplementations)
+nmap gy <Action>(ShowErrorDescription)
+noremap gi <ESC>:action ShowIntentionActions<CR>
+noremap gp <ESC>:action ParameterInfo<CR>
+noremap gti <ESC>:action GotoImplementation<CR>
+noremap gts <ESC>:action GotoSuperMethod<CR>
+noremap gtd <ESC>:action GotoDeclaration<CR>
+noremap gtf <ESC>:action GotoFile<CR>
+nnoremap gt :action GotoTest<CR>
+nmap <c-o> <Action>(Back)
+nmap <c-i> <Action>(Forward)
+noremap ghc <ESC>:action CallHierarchy<CR>
+noremap ght <ESC>:action TypeHierarchy<CR>
+noremap ghm <ESC>:action MethodHierarchy<CR>
+noremap gj <ESC>:action SliceBackward<CR>
+noremap gk <ESC>:action SliceForward<CR>
+noremap gx <ESC>:action CloseAllEditorsButActive<CR>
+noremap gn <ESC>:action GotoClass<CR>
+noremap gm <ESC>:action GotoSymbol<CR>
+noremap gf <ESC>:action FindInPath<CR>
+noremap g' <ESC>:action ReplaceInPath<CR>
+noremap [[ <ESC>:action MethodUp<CR>
+noremap ]] <ESC>:action MethodDown<CR>
+nnoremap zC :action CollapseRegionRecursively<CR>
+nnoremap zO :action ExpandRegionRecursively<CR>
+
+"--  Method text objects operation replacement
+nnoremap vam j:action MethodUp<cr>0v]M
+" nnoremap vim j:action MethodUp<cr>]m<cr>v]M<bs>
+nnoremap dam j:action MethodUp<cr>0v]M"_d
+" nnoremap dim j:action MethodUp<cr>]m<cr>v]M<bs>"_d
+nnoremap yam j:action MethodUp<cr>0v]My
+" nnoremap yim j:action MethodUp<cr>]m<cr>v]M<bs>y
+nnoremap cam j:action MethodUp<cr>0v]M"_c
+" nnoremap cim j:action MethodUp<cr>]m<cr>v]M<bs>"_c
+
+function! Invert(calledFromVisual)
+  let antonyms = ['true', 'false', 'after', 'before', 'start', 'end', 'left', 'right', 'first', 'last', \
+                  'True', 'False', 'After', 'Before', 'Start', 'End', 'Left', 'Right', 'First', 'Last']
+
+  if a:calledFromVisual
+    normal gv"wy
+  else
+    normal "wyiw
+  endif
+  let wordUnderCaret = @w
+
+  let eraseWord = a:calledFromVisual ? 'gvc' : 'ciw'
+  let count = 0
+  while (count < len(antonyms))
+    if (antonyms[count] ==# wordUnderCaret)
+      let antonym = (count % 2 ==? 0) ? antonyms[count + 1] : antonyms[count - 1]
+      execute 'normal ' .. eraseWord .. antonym
+      break
+    endif
+    let count += 1
+  endwhile
+endfunction
+
+nnoremap ! :call Invert(0)<CR>
+vnoremap ! :<C-u>call Invert(1)<CR>

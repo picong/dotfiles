@@ -1,0 +1,47 @@
+# Compiled files
+*.pyc
+*.class
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+*.swp
+*.swo
+*~
+
+# Secrets (don't commit sensitive data)
+*_private*
+*_secret*
+*.key
+*.pem
+
+# Large binary files
+*.pdf
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.mp3
+*.mp4
+*.zip
+*.tar.gz
+
+# Plugin/cache directories
+lazy-lock.json
+pack/
+node_modules/
+
+# Tmux plugins (install via TPM)
+.tmux/plugins/
+.config/tmux/plugins/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup*
+
+# Fish variables (machine-specific)
+fish_variables
