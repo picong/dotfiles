@@ -1,47 +1,52 @@
-# Compiled files
-*.pyc
-*.class
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# Editor
-*.swp
-*.swo
-*~
-
-# Secrets (don't commit sensitive data)
+# ---- Secrets: never commit (私密文件，切勿提交) ----
+.env
+*.env
+!*.env.example
+secrets.env
+*.local
+!*.local.example
+local.fish
 *_private*
 *_secret*
 *.key
 *.pem
+auth.json
+credentials.json
 
-# Large binary files
+# ---- Generated / runtime state (生成文件与运行时状态) ----
+fish_variables*
+node_modules/
+__pycache__/
+*.pyc
+*.class
+.venv/
+venv/
+pack/
+.tmux/plugins/
+.config/tmux/plugins/
+*.log
+*.sock
+
+# ---- Backups / temp (备份与临时文件) ----
+*.bak
+*.bak-*
+*.bak.*
+*.backup*
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+.DS_Store
+
+# ---- Large binaries (大文件；fastfetch logo 例外) ----
 *.pdf
-*.png
-*.jpg
-*.jpeg
-*.gif
 *.mp3
 *.mp4
 *.zip
 *.tar.gz
-
-# Plugin/cache directories
-lazy-lock.json
-pack/
-node_modules/
-
-# Tmux plugins (install via TPM)
-.tmux/plugins/
-.config/tmux/plugins/
-
-# Temporary files
-*.tmp
-*.temp
-*.bak
-*.backup*
-
-# Fish variables (machine-specific)
-fish_variables
+*.jpg
+*.jpeg
+*.gif
+*.png
+!packages/cli/.config/fastfetch/logos/*.png

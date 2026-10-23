@@ -1,0 +1,195 @@
+{
+  "env": {
+    "ANTHROPIC_AUTH_TOKEN": "${GW_KEY_CLAUDE}",
+    "ANTHROPIC_BASE_URL": "${AI_GATEWAY_URL}",
+    "ENABLE_PROMPT_CACHING_1H": "1",
+    "API_TIMEOUT_MS": "600000",
+    "CLAUDE_CODE_ATTRIBUTION_HEADER": "0",
+    "CLAUDE_CODE_COORDINATOR_MODE": "1",
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
+    "CLAUDE_CODE_MAX_OUTPUT_TOKENS": "64000",
+    "CLAUDE_CODE_WORKFLOWS": "1",
+    "CODEGRAPH_NO_PROMPT_HOOK": "1",
+    "MAX_THINKING_TOKENS": "31999"
+  },
+  "permissions": {
+    "allow": [
+      "WebFetch",
+      "mcp__codegraph__codegraph_explore"
+    ],
+    "deny": [],
+    "defaultMode": "auto"
+  },
+  "availableModels": [
+    "claude-opus-5-thinking",
+    "claude-opus-5-thinking[1m]",
+    "claude-opus-5",
+    "claude-opus-5[1m]",
+    "claude-opus-4-8",
+    "claude-opus-4-8[1m]",
+    "claude-opus-4-7",
+    "claude-opus-4-7[1m]",
+    "claude-opus-4-6",
+    "claude-opus-4-6[1m]",
+    "claude-opus-4-5-20251101",
+    "claude-sonnet-5",
+    "claude-sonnet-5[1m]",
+    "claude-sonnet-4-6",
+    "claude-sonnet-4-6[1m]",
+    "claude-sonnet-4-5-20250929",
+    "claude-haiku-4-5-20251001",
+    "gpt-5.6-sol",
+    "gpt-5.6-sol-thinking",
+    "gpt-5.6-terra",
+    "gpt-5.6-terra-thinking",
+    "gpt-5.6-luna",
+    "gpt-5.6-luna-thinking",
+    "codex-auto-review",
+    "deepseek-v4-pro",
+    "deepseek-v4-pro[1m]",
+    "deepseek-v4-flash",
+    "deepseek-v4-flash[1m]",
+    "deepseek-flash",
+    "deepseek-v4-1-flash-261017",
+    "GLM-5",
+    "glm-5",
+    "glm-5.2",
+    "glm-5.3",
+    "Kimi-K2.5",
+    "kimi-k3",
+    "MiniMax-M2.5",
+    "qwen3.8-max",
+    "qwen3.6-plus",
+    "doubao-seed-2.1-pro",
+    "doubao-seed-2.1-turbo",
+    "doubao-seed-2.0-pro",
+    "doubao-seed-2.0-mini",
+    "doubao-seed-2.0-lite",
+    "doubao-seed-evolving",
+    "Auto"
+  ],
+  "skillOverrides": {
+    "diagnose-from-logs": "off",
+    "diagnose-web-5xx": "off",
+    "prototype": "off",
+    "research": "off",
+    "handoff": "off",
+    "teach": "off",
+    "code-review": "off",
+    "codebase-design": "off",
+    "daily-report-generator": "off",
+    "domain-modeling": "off",
+    "grill-with-docs": "off",
+    "grilling": "off",
+    "improve-codebase-architecture": "off",
+    "resolving-merge-conflicts": "off",
+    "review-local": "off",
+    "setup-matt-pocock-skills": "off",
+    "write-a-skill": "off",
+    "writing-great-skills": "off",
+    "grill-me": "off"
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "rtk hook claude"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash '${HOME}/.claude/hooks/herdr-agent-state.sh' session",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "${HOME}/.claude/statusline.sh"
+  },
+  "enabledPlugins": {
+    "context7@claude-plugins-official": false,
+    "gopls-lsp@claude-plugins-official": false,
+    "jdtls-lsp@claude-plugins-official": false,
+    "superpowers@superpowers-dev": false,
+    "caveman@caveman": true,
+    "agents-md@builtin": false
+  },
+  "extraKnownMarketplaces": {
+    "openai-codex": {
+      "source": {
+        "source": "github",
+        "repo": "openai/codex-plugin-cc"
+      }
+    },
+    "ponytail": {
+      "source": {
+        "source": "github",
+        "repo": "DietrichGebert/ponytail"
+      }
+    },
+    "superpowers-dev": {
+      "source": {
+        "source": "github",
+        "repo": "obra/superpowers"
+      }
+    },
+    "understand-anything": {
+      "source": {
+        "source": "github",
+        "repo": "Egonex-AI/Understand-Anything"
+      }
+    },
+    "caveman": {
+      "source": {
+        "source": "github",
+        "repo": "JuliusBrussee/caveman"
+      }
+    },
+    "mattpocock": {
+      "source": {
+        "source": "git",
+        "url": "https://github.com/mattpocock/skills.git"
+      }
+    }
+  },
+  "language": "简体中文",
+  "effortLevel": "high",
+  "modelSettings": {
+    "claude-opus-5-thinking": {
+      "effortLevel": "xhigh"
+    },
+    "claude-opus-5": {
+      "effortLevel": "xhigh"
+    },
+    "claude-opus-4-8": {
+      "effortLevel": "xhigh"
+    },
+    "claude-opus-5-5": {
+      "effortLevel": "xhigh"
+    },
+    "claude-sonnet-5-5": {
+      "effortLevel": "xhigh"
+    }
+  },
+  "tui": "fullscreen",
+  "skipDangerousModePermissionPrompt": true,
+  "skipWorkflowUsageWarning": true,
+  "theme": "custom:noctalia",
+  "editorMode": "normal",
+  "verbose": true,
+  "teammateMode": "in-process",
+  "useAutoModeDuringPlan": false
+}

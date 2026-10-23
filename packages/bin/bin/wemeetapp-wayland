@@ -1,0 +1,6 @@
+#!/bin/bash
+export QT_QPA_PLATFORM=wayland
+export WEMEET_XWAYLAND=0
+export LD_LIBRARY_PATH="/opt/wemeet/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+export QT_PLUGIN_PATH="/opt/wemeet/plugins"
+exec /opt/wemeet/bin/wemeetapp "$@"

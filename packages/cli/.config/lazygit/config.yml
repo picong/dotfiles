@@ -1,0 +1,59 @@
+os:
+  # 从 nvim 内启动 lazygit 时，把文件送回父 nvim 而不是嵌套新实例
+  editPreset: 'nvim-remote'
+
+customCommands:
+  # X = 对选中的冲突文件开 nvim 三方合并视图（IDEA 式）
+  - key: 'X'
+    context: 'files'
+    description: '三方合并：nvimdiff 解决选中文件冲突'
+    command: 'git mergetool -y {{.SelectedFile.Name | quote}}'
+    output: terminal
+    after:
+      checkForConflicts: true
+  # <a-x> = 一次解决本次合并里所有冲突文件（逐个弹出 nvim）
+  - key: '<a-x>'
+    context: 'files'
+    description: '三方合并：解决全部冲突文件'
+    command: 'git mergetool -y'
+    output: terminal
+    after:
+      checkForConflicts: true
+  # D = diffview 一次打开全部冲突文件（绕开 mergetool 的逐文件循环）
+  # 在 diffview 里解决完直接 :wa 写盘，退出后回 lazygit 用空格 stage、m 续合并
+  - key: 'N'
+    context: 'files'
+    description: 'diffview：一次打开全部冲突文件'
+    command: 'nvim -c DiffviewOpen'
+    output: terminal
+    after:
+      checkForConflicts: true
+
+gui:
+  theme:
+    activeBorderColor:
+      - "#7ad8b3"
+      - bold
+    inactiveBorderColor:
+      - "#aacfbd"
+    searchingActiveBorderColor:
+      - "#c3c0ff"
+      - bold
+    optionsTextColor:
+      - "#bdc9c2"
+    selectedLineBgColor:
+      - "#262b28"
+    inactiveViewSelectedLineBgColor:
+      - bold
+    cherryPickedCommitFgColor:
+      - "#bdc9c2"
+    cherryPickedCommitBgColor:
+      - "#c3c0ff"
+    markedBaseCommitFgColor:
+      - "#c3c0ff"
+    markedBaseCommitBgColor:
+      - "#ffb4ab"
+    unstagedChangesColor:
+      - "#ffb4ab"
+    defaultFgColor:
+      - "#dfe4df"

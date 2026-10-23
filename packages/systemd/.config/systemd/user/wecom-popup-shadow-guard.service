@@ -1,0 +1,14 @@
+[Unit]
+Description=WeCom popup shadow guard
+After=graphical-session.target
+
+[Service]
+Type=simple
+Environment=DISPLAY=:0
+Environment=WECOM_PREFIX=/home/picong/.deepinwine/Deepin-WXWork-OfficialDeepin11
+ExecStart=/home/picong/.local/bin/wecom-popup-shadow-guard --watch
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=default.target

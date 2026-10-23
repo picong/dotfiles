@@ -1,0 +1,11 @@
+[Unit]
+Description=UA Proxy - rewrites User-Agent for API requests
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 /home/picong/.local/bin/ua-proxy.py
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,29 @@
+# mako notification config — noctalia gold/dark theme (通知配色)
+font=Maple Mono NF 11
+background-color=#141008e6
+text-color=#e8dcc0
+border-color=#e4b469
+border-size=2
+border-radius=10
+padding=12
+margin=8
+default-timeout=5000
+ignore-timeout=0
+max-visible=5
+anchor=top-right
+layer=overlay
+icons=1
+max-icon-size=48
+width=360
+height=120
+
+[urgency=low]
+border-color=#8f7a4f
+default-timeout=4000
+
+[urgency=high]
+border-color=#fd4663
+default-timeout=0
+
+[mode=do-not-disturb]
+invisible=1

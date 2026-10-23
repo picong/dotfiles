@@ -1,0 +1,110 @@
+[
+  {
+    // IDEA "Copy Reference" 等价功能：拷贝当前类/方法的全限定名
+    "label": "Copy Reference",
+    "command": "/home/picong/.config/zed/scripts/copy-reference.sh",
+    "reveal": "never",
+    "hide": "always",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true
+  },
+  // =====================================================================
+  // Go struct 标签（vscode-go "Go: Add Tags" 等价），全部走 go-add-tags.sh。
+  //
+  // 光标放在 struct 内任意位置，也可停在 `type X struct {` 行或上方文档注释行。
+  //
+  // 为什么走脚本而不是直接调 gomodifytags：
+  //   1. -line $ZED_ROW 只处理光标那一行（实测其余字段不动），要整个 struct
+  //      得用 -offset（字节偏移）；脚本把 ZED_ROW/ZED_COLUMN 换算成字节 offset。
+  //   2. -add-tags 里 ',' 是 KEY 分隔符，写 'binding:required,gte=0' 会被拆成两个
+  //      key 且静态值泄漏，产出错误的 `binding:"required" gte=0:"required"`。
+  //      带多个校验项必须分两趟：-add-tags 建 key + 首值，-add-options 追加其余。
+  //      脚本用 ';' 分隔的 TAGS spec 统一表达，内部自动拆这两趟。
+  //
+  // TAGS spec：';' 分隔各 key，'=' 后是值，值内 ',' 原样保留
+  //   form                    -> form:"check_in"          (名字由字段派生)
+  //   json=,omitempty         -> json:"check_in,omitempty"(派生名 + 选项)
+  //   binding=required,gte=0  -> binding:"required,gte=0"
+  //   time_format=2006-01-02  -> time_format:"2006-01-02"
+  // =====================================================================
+  {
+    // gin 常用全套
+    "label": "Add validator tags",
+    "command": "/home/picong/.config/zed/scripts/go-add-tags.sh",
+    "reveal": "never",
+    "hide": "always",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true
+  },
+  {
+    // 只补 json（日常最常用）
+    "label": "Add json tags",
+    "command": "/home/picong/.config/zed/scripts/go-add-tags.sh",
+    "env": { "TAGS": "json" },
+    "reveal": "never",
+    "hide": "always",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true
+  },
+  {
+    // JSON 请求体 DTO：json + binding。日常最常用的组合。
+    //
+    // 原先这个任务叫 "Add time tags" 且带 time_format，是个误导：JSON 绑定走
+    // encoding/json，只认 RFC3339 且完全忽略 time_format（那 tag 只在 gin 的
+    // form 系路径被读，binding/form_mapping.go 的 setTimeField，实测确认）。
+    // 去掉后它就是普通的 json DTO 任务，跟时间无关，故改名。
+    // JSON 里要收 "2006-01-02" 得给字段套自定义类型实现 UnmarshalJSON。
+    //
+    // 注意它是 "Add validator tags" 的子集：若已按过 gt，这个不会有任何改动，
+    // 脚本会明确报 "no change" 而不是假装成功。
+    "label": "Add json binding tags",
+    "command": "/home/picong/.config/zed/scripts/go-add-tags.sh",
+    "env": { "TAGS": "json;binding=required" },
+    "reveal": "never",
+    "hide": "always",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true
+  },
+  {
+    // query / 表单 DTO：这时 time_format 才真正生效（ShouldBindQuery 等）。
+    "label": "Add form tags (time_format)",
+    "command": "/home/picong/.config/zed/scripts/go-add-tags.sh",
+    "env": { "TAGS": "form;binding=required;time_format=2006-01-02" },
+    "reveal": "never",
+    "hide": "always",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true
+  },
+  {
+    // 任意 spec：在任务终端里现场输入（Zed 任务没有输入框 API，只能 read）。
+    // 故此任务必须 reveal:always + hide:on_success，否则看不到提示、无法输入。
+    "label": "Add custom tags",
+    "command": "/home/picong/.config/zed/scripts/go-add-tags.sh",
+    "env": { "PROMPT": "1" },
+    "reveal": "always",
+    "hide": "on_success",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true
+  },
+  {
+    // 同上，但只作用于光标那一行的字段。
+    // 给 binding:"gtfield=CheckIn" 这类只属于单个字段的校验用。
+    "label": "Add custom tags (this field)",
+    "command": "/home/picong/.config/zed/scripts/go-add-tags.sh",
+    "env": { "PROMPT": "1", "FIELD": "caret" },
+    "reveal": "always",
+    "hide": "on_success",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true
+  },
+  {
+    // 反向操作：清掉光标所在 struct 的全部标签
+    "label": "Clear struct tags",
+    "command": "/home/picong/.config/zed/scripts/go-add-tags.sh",
+    "env": { "MODE": "clear" },
+    "reveal": "never",
+    "hide": "always",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true
+  }
+]

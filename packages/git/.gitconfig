@@ -1,0 +1,16 @@
+[pull]
+	rebase = false
+[http "https://github.com/"]
+	version = HTTP/1.1
+[merge]
+	tool = nvimdiff
+	conflictStyle = zdiff3
+[mergetool]
+	prompt = false
+	keepBackup = false
+[mergetool "nvimdiff"]
+	layout = LOCAL,BASE,REMOTE / MERGED + BASE,LOCAL + BASE,REMOTE
+# Identity lives in ~/.gitconfig.local (not committed)
+# (身份信息放在 ~/.gitconfig.local，不入库)
+[include]
+	path = ~/.gitconfig.local

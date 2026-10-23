@@ -1,0 +1,205 @@
+model_provider = "OpenAI"
+model = "gpt-5.6-sol"
+review_model = "gpt-5.5"
+model_reasoning_effort = "xhigh"
+model_catalog_json = "${HOME}/.codex/model_catalog.json"
+disable_response_storage = true
+network_access = "enabled"
+windows_wsl_setup_acknowledged = true
+model_context_window = 400000
+model_auto_compact_token_limit = 360000
+service_tier = "fast"
+approvals_reviewer = "user"
+personality = "pragmatic"
+approval_policy = "never"
+
+[model_providers.OpenAI]
+name = "OpenAI"
+base_url = "${AI_GATEWAY_URL}"
+wire_api = "responses"
+requires_openai_auth = true
+
+[model_providers.GWClaude]
+name = "GWClaude"
+base_url = "${AI_GATEWAY_URL}"
+wire_api = "responses"
+experimental_bearer_token = "${GW_KEY_CLAUDE}"
+
+[features]
+hooks = true
+memories = true
+terminal_resize_reflow = true
+network_proxy = true
+external_migration = true
+prevent_idle_sleep = true
+js_repl = false
+
+[tui]
+vim_mode_default = false
+status_line = [
+    "model-with-reasoning",
+    "project-name",
+    "git-branch",
+    "context-used",
+]
+status_line_use_colors = true
+pet = "disabled"
+theme = "catppuccin-mocha"
+screen_reader_detection_done = true
+
+[shell_environment_policy]
+inherit = "core"
+
+[shell_environment_policy.set]
+ANTHROPIC_AUTH_TOKEN = "${GW_KEY_CLAUDE}"
+ANTHROPIC_BASE_URL = "${AI_GATEWAY_URL}"
+CLAUDE_CODE_MAX_OUTPUT_TOKENS = "64000"
+MAX_THINKING_TOKENS = "31999"
+API_TIMEOUT_MS = "600000"
+CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS = "1"
+CLAUDE_CODE_COORDINATOR_MODE = "1"
+CLAUDE_CODE_WORKFLOWS = "1"
+CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC = "1"
+CLAUDE_CODE_ATTRIBUTION_HEADER = "0"
+BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
+NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "9230e2bd8b24b7ac7a0ba6774c64bf0d78ecdabbdd91d0ed627b02a587bae2df"
+NODE_REPL_TRUSTED_CODE_PATHS = "${HOME}/.codex:/usr/lib/chatgpt/resources/cua_node/lib/node_modules"
+ENABLE_PROMPT_CACHING_1H = "1"
+CODEGRAPH_NO_PROMPT_HOOK = "1"
+
+[mcp_servers.codegraph]
+command = "codegraph"
+args = ["serve", "--mcp"]
+
+[mcp_servers.github]
+url = "https://api.githubcopilot.com/mcp/"
+enabled = false
+
+[marketplaces.openai-bundled]
+last_updated = "2026-09-17T10:18:18Z"
+source_type = "local"
+source = "${HOME}/.codex/.tmp/bundled-marketplaces/openai-bundled"
+
+[marketplaces.claude-plugins-official]
+last_updated = "2026-08-21T09:23:49Z"
+last_revision = "67a666efc8524ff7abaa266f84e514aa77aee48f"
+source_type = "git"
+source = "https://github.com/anthropics/claude-plugins-official.git"
+
+[marketplaces.openai-codex]
+last_updated = "2026-08-17T06:35:11Z"
+last_revision = "db52e28f4d9ded852ab3942cea316258ae4ef346"
+source_type = "git"
+source = "https://github.com/openai/codex-plugin-cc.git"
+
+[marketplaces.ponytail]
+last_updated = "2026-08-19T02:30:40Z"
+last_revision = "2ed6c52c9d7e5e56942508591085fd45dea277d3"
+source_type = "git"
+source = "https://github.com/DietrichGebert/ponytail.git"
+
+[marketplaces.caveman]
+last_updated = "2026-08-19T10:12:37Z"
+last_revision = "99a9aa2f5a45097fc3563febea7d0baf64407441"
+source_type = "git"
+source = "https://github.com/JuliusBrussee/caveman.git"
+
+[marketplaces.openai-primary-runtime]
+last_updated = "2026-08-26T02:32:51Z"
+source_type = "local"
+source = "${HOME}/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
+
+[marketplaces.mattpocock]
+last_updated = "2026-08-26T02:31:26Z"
+source_type = "git"
+source = "https://github.com/mattpocock/skills.git"
+
+[plugins."browser@openai-bundled"]
+enabled = true
+
+[plugins."visualize@openai-bundled"]
+enabled = true
+
+[plugins."jdtls-lsp@claude-plugins-official"]
+enabled = true
+
+[plugins."codex@openai-codex"]
+enabled = true
+
+[plugins."ponytail@ponytail"]
+enabled = true
+
+[plugins."caveman@caveman"]
+enabled = true
+
+[plugins."documents@openai-primary-runtime"]
+enabled = true
+
+[plugins."pdf@openai-primary-runtime"]
+enabled = true
+
+[plugins."spreadsheets@openai-primary-runtime"]
+enabled = true
+
+[plugins."presentations@openai-primary-runtime"]
+enabled = true
+
+[plugins."template-creator@openai-primary-runtime"]
+enabled = true
+
+[plugins."chrome@openai-bundled"]
+enabled = false
+
+[plugins."github@claude-plugins-official"]
+enabled = true
+
+[plugins."mattpocock-skills@mattpocock"]
+enabled = true
+
+[desktop]
+external-agent-import-sync-enabled = true
+conversationDetailMode = "STEPS_COMMANDS"
+ambient-suggestions-enabled = false
+appearanceTheme = "dark"
+appearanceLightCodeThemeId = "catppuccin"
+sansFontSize = 17
+codeFontSize = 15
+usePointerCursors = false
+reduced-motion-preference = "system"
+followUpQueueMode = "queue"
+avatar-overlay-mascot-width-px = 89
+show-context-window-usage = true
+appearanceDarkCodeThemeId = "tokyo-night"
+
+[desktop.open-in-target-preferences]
+global = "kitty"
+
+[desktop.appearanceLightChromeTheme]
+accent = "#8839ef"
+contrast = 45
+ink = "#4c4f69"
+opaqueWindows = false
+surface = "#eff1f5"
+
+[desktop.appearanceLightChromeTheme.fonts]
+
+[desktop.appearanceLightChromeTheme.semanticColors]
+diffAdded = "#40a02b"
+diffRemoved = "#d20f39"
+skill = "#8839ef"
+
+[desktop.appearanceDarkChromeTheme]
+accent = "#3d59a1"
+contrast = 60
+ink = "#a9b1d6"
+opaqueWindows = false
+surface = "#1a1b26"
+
+[desktop.appearanceDarkChromeTheme.fonts]
+code = '"Maple Mono"'
+ui = '"Maple Mono"'
+
+[desktop.appearanceDarkChromeTheme.semanticColors]
+diffAdded = "#449dab"
+diffRemoved = "#914c54"
+skill = "#9d7cd8"

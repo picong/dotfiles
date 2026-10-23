@@ -1,0 +1,3 @@
+com.github.wwmm.easyeffects
+io.github.fabrialberio.pinapp
+it.mijorus.gearlever

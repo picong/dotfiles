@@ -1,0 +1,18 @@
+[Unit]
+Description=Freeze probe - record which layer stalls during input freezes
+After=graphical-session.target
+PartOf=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=/home/picong/.local/bin/freeze-probe.sh
+Restart=on-failure
+RestartSec=5
+# Must never be the thing that stalls, and must never be swapped out
+# (探针本身不能卡，也不能被换出)
+IOSchedulingClass=best-effort
+IOSchedulingPriority=0
+MemorySwapMax=0
+
+[Install]
+WantedBy=graphical-session.target

@@ -1,0 +1,40 @@
+# Prefer Clash Verge and fall back to a direct connection when it is unavailable.
+# (优先使用 Clash Verge；不可用时回退为直连。)
+mixed-port: 7898
+allow-lan: false
+bind-address: 127.0.0.1
+mode: rule
+log-level: warning
+ipv6: true
+
+proxies:
+  - name: Clash-Verge
+    type: http
+    server: 127.0.0.1
+    port: 7897
+
+proxy-groups:
+  - name: Adaptive
+    type: fallback
+    url: https://connectivitycheck.gstatic.com/generate_204
+    interval: 5
+    lazy: false
+    expected-status: 204
+    proxies:
+      - Clash-Verge
+      - DIRECT
+
+rules:
+  # Keep local and private destinations independent of both proxy processes.
+  # (本地及私网目标不依赖任何代理进程。)
+  # Overseas switch server (ssw): always direct.
+  # (海外开关服务器 ssw：固定直连。)
+  - IP-CIDR,${SSW_HOST}/32,DIRECT
+  - IP-CIDR,127.0.0.0/8,DIRECT,no-resolve
+  - IP-CIDR,192.168.0.0/16,DIRECT,no-resolve
+  - IP-CIDR,10.0.0.0/8,DIRECT,no-resolve
+  - IP-CIDR,172.16.0.0/12,DIRECT,no-resolve
+  - IP-CIDR6,::1/128,DIRECT,no-resolve
+  - IP-CIDR6,fc00::/7,DIRECT,no-resolve
+  - IP-CIDR6,fe80::/10,DIRECT,no-resolve
+  - MATCH,Adaptive

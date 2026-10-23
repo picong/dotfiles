@@ -1,0 +1,49 @@
+onboarding = false
+[experimental]
+pane_history = true
+# Enable experimental local Kitty graphics rendering (needed for yazi/image preview)
+# (开启实验性 Kitty 图形渲染，yazi 等图片预览需要)
+kitty_graphics = true
+# Allow launching herdr inside a pane that is already inside herdr
+# (允许在已处于 herdr 内的 pane 里再启动 herdr，关闭嵌套检测)
+allow_nested = true
+
+[theme]
+name = "dracula"
+auto_switch = false
+[keys]
+prefix = "ctrl+space"
+
+[ui.toast]
+delivery = "system"
+
+[ui]
+show_agent_labels_on_pane_borders = false
+agent_panel_sort = "spaces"
+
+# Only these tokens are accepted: panel_bg, surface0, surface1, surface_dim,
+# overlay0, overlay1, subtext0, accent, text, mauve, green, yellow, red, blue,
+# teal, peach. Unknown keys are silently ignored by herdr.
+# (仅以上 token 可用；herdr 会静默忽略未知键)
+status_indicators = "dots"
+[theme.custom]
+accent = "#7ad8b3"
+panel_bg = "reset"
+# sidebar_bg / active_row_bg / selection_bg are not valid tokens; the row and
+# selection backgrounds are driven by surface0 / surface1 below
+# (sidebar_bg / active_row_bg / selection_bg 不是合法 token，
+#  行背景和选中背景由下方 surface0 / surface1 控制)
+surface0 = "#262b28"
+surface1 = "#313633"
+surface_dim = "#101412"
+overlay0 = "#88938c"
+overlay1 = "#bdc9c2"
+text = "#dfe4df"
+subtext0 = "#bdc9c2"
+mauve = "#7ad8b3"
+green = "#7ad8b3"
+yellow = "#aacfbd"
+red = "#ffb4ab"
+blue = "#c3c0ff"
+teal = "#aacfbd"
+peach = "#ffdeab"

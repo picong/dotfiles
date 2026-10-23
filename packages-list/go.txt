@@ -1,0 +1,4 @@
+golang.org/x/tools/gopls@latest
+github.com/go-delve/delve/cmd/dlv@latest
+github.com/fatih/gomodifytags@latest
+golang.org/x/pkgsite/cmd/pkgsite@latest

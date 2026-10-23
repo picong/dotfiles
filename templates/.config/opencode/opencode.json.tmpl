@@ -1,0 +1,241 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "gw-claude/claude-opus-5",
+  "provider": {
+    "gw-gpt": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "GPT 系列 (网关)",
+      "options": {
+        "baseURL": "${AI_GATEWAY_URL}/v1",
+        "apiKey": "${GW_KEY_GPT}"
+      },
+      "models": {
+        "gpt-5.6": {
+          "name": "GPT-5.6",
+          "tool_call": true,
+          "reasoning": true,
+          "temperature": true,
+          "attachment": true,
+          "limit": { "context": 1000000, "output": 100000 }
+        },
+        "gpt-5.6-sol": {
+          "name": "GPT-5.6 Sol",
+          "tool_call": true,
+          "reasoning": true,
+          "temperature": true,
+          "attachment": true,
+          "limit": { "context": 1000000, "output": 100000 }
+        },
+        "gpt-5.6-terra": {
+          "name": "GPT-5.6 Terra",
+          "tool_call": true,
+          "reasoning": true,
+          "temperature": true,
+          "attachment": true,
+          "limit": { "context": 1000000, "output": 100000 }
+        },
+        "gpt-5.6-luna": {
+          "name": "GPT-5.6 Luna",
+          "tool_call": true,
+          "reasoning": true,
+          "temperature": true,
+          "attachment": true,
+          "limit": { "context": 1000000, "output": 100000 }
+        },
+        "codex-auto-review": {
+          "name": "Codex Auto Review",
+          "tool_call": true,
+          "reasoning": true,
+          "temperature": true,
+          "limit": { "context": 200000, "output": 100000 }
+        },
+        "gpt-5.5": {
+          "name": "GPT-5.5",
+          "tool_call": true,
+          "reasoning": true,
+          "temperature": true,
+          "attachment": true,
+          "limit": { "context": 1000000, "output": 100000 }
+        }
+      }
+    },
+    "gw-claude": {
+      "npm": "@ai-sdk/anthropic",
+      "name": "Claude 系列 (网关)",
+      "options": {
+        "baseURL": "${AI_GATEWAY_URL}",
+        "apiKey": "${GW_KEY_CLAUDE}",
+        "headers": { "User-Agent": "curl/8.19.0" }
+      },
+      "models": {
+        "claude-opus-5": {
+          "name": "Claude Opus 5",
+          "tool_call": true,
+          "reasoning": true,
+          "temperature": true,
+          "attachment": true,
+          "limit": { "context": 1000000, "output": 128000 }
+        },
+        "claude-opus-4-8": {
+          "name": "Claude Opus 4.8",
+          "tool_call": true,
+          "reasoning": true,
+          "temperature": true,
+          "attachment": true,
+          "limit": { "context": 1000000, "output": 128000 }
+        },
+        "claude-opus-4-7": {
+          "name": "Claude Opus 4.7",
+          "tool_call": true,
+          "reasoning": true,
+          "temperature": true,
+          "attachment": true,
+          "limit": { "context": 1000000, "output": 128000 }
+        },
+        "claude-opus-4-6": {
+          "name": "Claude Opus 4.6",
+          "tool_call": true,
+          "reasoning": true,
+          "temperature": true,
+          "attachment": true,
+          "limit": { "context": 1000000, "output": 128000 }
+        },
+        "claude-opus-4-5-20251101": {
+          "name": "Claude Opus 4.5",
+          "tool_call": true,
+          "reasoning": true,
+          "temperature": true,
+          "attachment": true,
+          "limit": { "context": 1000000, "output": 128000 }
+        },
+        "claude-sonnet-5": {
+          "name": "Claude Sonnet 5",
+          "tool_call": true,
+          "reasoning": true,
+          "temperature": true,
+          "attachment": true,
+          "limit": { "context": 1000000, "output": 128000 }
+        },
+        "claude-sonnet-4-6": {
+          "name": "Claude Sonnet 4.6",
+          "tool_call": true,
+          "reasoning": true,
+          "temperature": true,
+          "attachment": true,
+          "limit": { "context": 1000000, "output": 128000 }
+        },
+        "claude-sonnet-4-5-20250929": {
+          "name": "Claude Sonnet 4.5",
+          "tool_call": true,
+          "reasoning": true,
+          "temperature": true,
+          "attachment": true,
+          "limit": { "context": 1000000, "output": 128000 }
+        },
+        "claude-haiku-4-5-20251001": {
+          "name": "Claude Haiku 4.5",
+          "tool_call": true,
+          "reasoning": true,
+          "temperature": true,
+          "attachment": true,
+          "limit": { "context": 1000000, "output": 128000 }
+        }
+      }
+    },
+    "gw": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "国产/其他模型 (网关)",
+      "options": {
+        "baseURL": "${AI_GATEWAY_URL}/v1",
+        "apiKey": "${GW_KEY_OTHER}"
+      },
+      "models": {
+        "deepseek-v4-pro": {
+          "name": "DeepSeek V4 Pro",
+          "tool_call": true,
+          "reasoning": true,
+          "interleaved": "reasoning_content",
+          "temperature": true,
+          "attachment": true,
+          "limit": { "context": 131072, "output": 65536 }
+        },
+        "deepseek-v4-flash": {
+          "name": "DeepSeek V4 Flash",
+          "tool_call": true,
+          "reasoning": true,
+          "interleaved": "reasoning_content",
+          "temperature": true,
+          "limit": { "context": 131072, "output": 65536 }
+        },
+        "deepseek-flash": {
+          "name": "DeepSeek Flash",
+          "tool_call": true,
+          "reasoning": true,
+          "interleaved": "reasoning_content",
+          "temperature": true,
+          "limit": { "context": 131072, "output": 65536 }
+        },
+        "deepseek-v4-1-flash-260910": {
+          "name": "DeepSeek V4.1 Flash",
+          "tool_call": true,
+          "reasoning": true,
+          "interleaved": "reasoning_content",
+          "temperature": true,
+          "limit": { "context": 131072, "output": 65536 }
+        },
+        "glm-5.3": {
+          "name": "GLM-5.3",
+          "tool_call": true,
+          "reasoning": true,
+          "interleaved": "reasoning_content",
+          "temperature": true,
+          "limit": { "context": 131072, "output": 16384 }
+        },
+        "glm-5.2": {
+          "name": "GLM-5.2",
+          "tool_call": true,
+          "reasoning": true,
+          "interleaved": "reasoning_content",
+          "temperature": true,
+          "limit": { "context": 131072, "output": 16384 }
+        },
+        "doubao-seed-2.1-turbo": {
+          "name": "豆包 Seed 2.1 Turbo",
+          "tool_call": true,
+          "temperature": true,
+          "limit": { "context": 131072, "output": 16384 }
+        },
+        "doubao-seed-2.1-pro": {
+          "name": "豆包 Seed 2.1 Pro",
+          "tool_call": true,
+          "temperature": true,
+          "limit": { "context": 131072, "output": 16384 }
+        },
+        "doubao-seed-2.0-pro": {
+          "name": "豆包 Seed 2.0 Pro",
+          "tool_call": true,
+          "temperature": true,
+          "limit": { "context": 131072, "output": 16384 }
+        },
+        "doubao-seed-2.0-mini": {
+          "name": "豆包 Seed 2.0 Mini",
+          "tool_call": true,
+          "temperature": true,
+          "limit": { "context": 131072, "output": 16384 }
+        },
+        "doubao-seed-2.0-lite": {
+          "name": "豆包 Seed 2.0 Lite",
+          "tool_call": true,
+          "temperature": true,
+          "limit": { "context": 131072, "output": 16384 }
+        },
+        "doubao-seed-evolving": {
+          "name": "豆包 Seed Evolving",
+          "tool_call": true,
+          "temperature": true,
+          "limit": { "context": 131072, "output": 16384 }
+        }
+      }
+    }
+  }
+}

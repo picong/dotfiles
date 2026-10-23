@@ -1,0 +1,8 @@
+# 在 xremap 的配置文件中 (例如 config.yml)
+modmap:
+  - name: CapsLock to Ctrl/Esc  # 配置名称
+    remap:
+      CapsLock:
+        held: leftctrl           # 当按住CapsLock时，作为左Ctrl键使用
+        alone: esc                # 当单独按下CapsLock时，映射为ESC键
+        alone_timeout_millis: 150 # 超时时间，防止误触

@@ -1,0 +1,7 @@
+{
+	"name": "auto-memory",
+	"version": "0.1.0",
+	"description": "Claude Code-style auto memory for Pi: index injection + LLM-driven write/read tools, plain-text, no daemon (Claude Code 风格自动记忆：索引注入 + LLM 主动读写工具，纯文本，无后台进程)",
+	"main": "index.ts",
+	"dependencies": {}
+}

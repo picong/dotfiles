@@ -1,0 +1,19 @@
+#!/bin/sh
+# Use the adaptive local proxy only when its OpenAI route is healthy.
+# (仅在本地自适应代理的 OpenAI 路由健康时使用代理。)
+
+proxy_url="http://127.0.0.1:7898"
+health_url="https://api.openai.com/v1/models"
+
+if curl --proxy "${proxy_url}" --connect-timeout 2 --max-time 4 \
+  --output /dev/null --silent --show-error "${health_url}"; then
+  export HTTP_PROXY="${proxy_url}"
+  export HTTPS_PROXY="${proxy_url}"
+  export http_proxy="${proxy_url}"
+  export https_proxy="${proxy_url}"
+else
+  unset HTTP_PROXY HTTPS_PROXY ALL_PROXY NO_PROXY
+  unset http_proxy https_proxy all_proxy no_proxy
+fi
+
+exec /usr/lib/chatgpt/codex-launcher "$@"

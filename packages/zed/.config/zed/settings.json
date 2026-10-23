@@ -1,0 +1,407 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "ui_font_family": ".ZedSans",
+  "buffer_font_family": "JetBrains Maple Mono",
+  "cli_default_open_behavior": "existing_window",
+  // 括号自动闭合要"立刻"出来：
+  // 1) use_autoclose 显式打开（输入 ( [ { " 时同一次编辑补上右半边，纯本地无网络）
+  // 2) use_on_type_format 关掉，输入时不再等 LSP 的 onTypeFormatting 往返
+  // 3) edit_predictions.mode 由 eager 改 subtle，避免每敲一键就同步收集 LSP 上下文
+  //    并请求远端网关（日志里 GetEditPredictionTypeDefinitions 每列连发就是它）
+  "use_autoclose": true,
+  "use_auto_surround": true,
+  "use_on_type_format": false,
+  "edit_predictions": {
+    "mode": "subtle",
+    "open_ai_compatible_api": {
+      "model": "gpt-5.6-sol",
+      "api_url": "http://192.168.1.99:3200"
+    },
+    "provider": "none"
+  },
+  "disable_ai": false,
+  "agent": {
+    "inline_assistant_model": {
+      "provider": "codex",
+      "model": "gpt-5.5",
+      "enable_thinking": false
+    },
+    "sandbox_permissions": {
+      "network_hosts": [
+        "raw.githubusercontent.com",
+        "zed.dev"
+      ]
+    },
+    "show_turn_stats": true,
+    "tool_permissions": {
+      "default": "allow",
+      "tools": {}
+    },
+    "sidebar_side": "right",
+    "default_profile": "write",
+    "default_model": {
+      "effort": "high",
+      "enable_thinking": true,
+      "provider": "codex",
+      "model": "gpt-5.6-luna"
+    }
+  },
+  "language_models": {
+    "openai_compatible": {
+      "codex": {
+        "api_url": "http://192.168.1.99:3200",
+        "available_models": [
+          {
+            "name": "gpt-5.6-sol",
+            "display_name": "GPT-5.6 Sol",
+            "max_tokens": 400000,
+            "reasoning_effort": "xhigh",
+            "capabilities": {
+              "tools": true,
+              "images": false,
+              "parallel_tool_calls": false,
+              "prompt_cache_key": false,
+              "chat_completions": false,
+              "interleaved_reasoning": false,
+              "max_tokens_parameter": false
+            }
+          },
+          {
+            "name": "gpt-5.6-terra",
+            "display_name": "GPT-5.6 Terra",
+            "max_tokens": 400000,
+            "reasoning_effort": "xhigh",
+            "capabilities": {
+              "tools": true,
+              "images": false,
+              "parallel_tool_calls": false,
+              "prompt_cache_key": false,
+              "chat_completions": false,
+              "interleaved_reasoning": false,
+              "max_tokens_parameter": false
+            }
+          },
+          {
+            "name": "gpt-5.6-luna",
+            "display_name": "GPT-5.6 Luna",
+            "max_tokens": 400000,
+            "reasoning_effort": "xhigh",
+            "capabilities": {
+              "tools": true,
+              "images": false,
+              "parallel_tool_calls": false,
+              "prompt_cache_key": false,
+              "chat_completions": false,
+              "interleaved_reasoning": false,
+              "max_tokens_parameter": false
+            }
+          },
+          {
+            "name": "gpt-5.5",
+            "display_name": "GPT-5.5",
+            "max_tokens": 400000,
+            "reasoning_effort": "xhigh",
+            "capabilities": {
+              "tools": true,
+              "images": false,
+              "parallel_tool_calls": false,
+              "prompt_cache_key": false,
+              "chat_completions": false,
+              "interleaved_reasoning": false,
+              "max_tokens_parameter": false
+            }
+          },
+          {
+            "name": "gpt-5.4",
+            "display_name": "GPT-5.4",
+            "max_tokens": 400000,
+            "reasoning_effort": "xhigh",
+            "capabilities": {
+              "tools": true,
+              "images": false,
+              "parallel_tool_calls": false,
+              "prompt_cache_key": false,
+              "chat_completions": false,
+              "interleaved_reasoning": false,
+              "max_tokens_parameter": false
+            }
+          },
+          {
+            "name": "gpt-5.4-mini",
+            "display_name": "GPT-5.4 Mini",
+            "max_tokens": 400000,
+            "reasoning_effort": "xhigh",
+            "capabilities": {
+              "tools": true,
+              "images": false,
+              "parallel_tool_calls": false,
+              "prompt_cache_key": false,
+              "chat_completions": false,
+              "interleaved_reasoning": false,
+              "max_tokens_parameter": false
+            }
+          },
+          {
+            "name": "claude-opus-4-8",
+            "display_name": "Claude Opus 4.8",
+            "max_tokens": 200000,
+            "reasoning_effort": "high",
+            "capabilities": {
+              "tools": true,
+              "images": false,
+              "parallel_tool_calls": false,
+              "prompt_cache_key": false,
+              "chat_completions": false,
+              "interleaved_reasoning": false,
+              "max_tokens_parameter": false
+            }
+          },
+          {
+            "name": "claude-opus-4-7",
+            "display_name": "Claude Opus 4.7",
+            "max_tokens": 200000,
+            "reasoning_effort": "high",
+            "capabilities": {
+              "tools": true,
+              "images": false,
+              "parallel_tool_calls": false,
+              "prompt_cache_key": false,
+              "chat_completions": false,
+              "interleaved_reasoning": false,
+              "max_tokens_parameter": false
+            }
+          },
+          {
+            "name": "claude-opus-4-6",
+            "display_name": "Claude Opus 4.6",
+            "max_tokens": 200000,
+            "reasoning_effort": "high",
+            "capabilities": {
+              "tools": true,
+              "images": false,
+              "parallel_tool_calls": false,
+              "prompt_cache_key": false,
+              "chat_completions": false,
+              "interleaved_reasoning": false,
+              "max_tokens_parameter": false
+            }
+          },
+          {
+            "name": "claude-sonnet-5",
+            "display_name": "Claude Sonnet 5",
+            "max_tokens": 200000,
+            "reasoning_effort": "high",
+            "capabilities": {
+              "tools": true,
+              "images": false,
+              "parallel_tool_calls": false,
+              "prompt_cache_key": false,
+              "chat_completions": false,
+              "interleaved_reasoning": false,
+              "max_tokens_parameter": false
+            }
+          },
+          {
+            "name": "claude-sonnet-4-6",
+            "display_name": "Claude Sonnet 4.6",
+            "max_tokens": 200000,
+            "reasoning_effort": "high",
+            "capabilities": {
+              "tools": true,
+              "images": false,
+              "parallel_tool_calls": false,
+              "prompt_cache_key": false,
+              "chat_completions": false,
+              "interleaved_reasoning": false,
+              "max_tokens_parameter": false
+            }
+          },
+          {
+            "name": "claude-sonnet-4-5-20250929",
+            "display_name": "Claude Sonnet 4.5",
+            "max_tokens": 200000,
+            "reasoning_effort": "high",
+            "capabilities": {
+              "tools": true,
+              "images": false,
+              "parallel_tool_calls": false,
+              "prompt_cache_key": false,
+              "chat_completions": false,
+              "interleaved_reasoning": false,
+              "max_tokens_parameter": false
+            }
+          },
+          {
+            "name": "claude-haiku-4-5-20251001",
+            "display_name": "Claude Haiku 4.5",
+            "max_tokens": 200000,
+            "reasoning_effort": "high",
+            "capabilities": {
+              "tools": true,
+              "images": false,
+              "parallel_tool_calls": false,
+              "prompt_cache_key": false,
+              "chat_completions": false,
+              "interleaved_reasoning": false,
+              "max_tokens_parameter": false
+            }
+          }
+        ]
+      }
+    }
+  },
+  // snippet 排到补全列表最前面。默认 "inline" 会让 snippet 跟 gopls 的几十条结果
+  // 一起按分数排，实际常被压到看不见的位置 —— 表现就是"装了 snippets 扩展但没提示"。
+  // 取值: top / inline / bottom / none（none = 完全不显示 snippet）。
+  // (Snippets first. The default "inline" sorts them among gopls's results, where
+  //  they get buried — looks exactly like "the snippets extension isn't working".)
+  "snippet_sort_order": "top",
+  "project_panel": {
+    "dock": "left"
+  },
+  "icon_theme": {
+    "mode": "system",
+    "light": "Zed (Default)",
+    "dark": "Catppuccin Mocha"
+  },
+  "agent_servers": {
+    "codex-acp": {
+      "default_config_options": {
+        "fast-mode": false
+      },
+      "type": "registry"
+    },
+    "claude-acp": {
+      "default_config_options": {
+        "effort": "high",
+        "fast": true,
+        "model": "claude-opus-5"
+      },
+      "type": "registry"
+    }
+  },
+  "session": {
+    "trust_all_worktrees": true
+  },
+  "vim_mode": true,
+  // Vim 体验微调：smartcase 查找、正则搜索、相对行号更贴近 nvim
+  "vim": {
+    "use_smartcase_find": true,
+    "use_regex_search": true,
+    "toggle_relative_line_numbers": true,
+    "highlight_on_yank_duration": 200
+  },
+  "relative_line_numbers": "enabled",
+  "base_keymap": "JetBrains",
+  // MyBatis mapper 文件（含裸名如 Login.xml）都在 mapper(s)/ 目录下，
+  // 用目录 glob 归到 MyBatis XML 语言以启用 SQL 高亮；
+  // mybatis-config.xml 在 resources/ 下不受影响。
+  // (MyBatis mapper files, incl. bare names like Login.xml, all live under
+  //  mapper(s)/; map them to the MyBatis XML language for SQL highlighting)
+  "file_types": {
+    "MyBatis XML": ["**/mapper/**/*.xml", "**/mappers/**/*.xml"]
+  },
+  // Zed 自己的文件扫描/搜索/文件树也要跳过这些。前面几项是 Zed 的默认值，
+  // 显式写出来是因为这个键是整体覆盖而不是追加。
+  // large Java monorepos 里 target 占 4.3G(14804 个文件)、.codegraph 占 1.3G，
+  // 扫这些既拖慢 Zed 也让 jdtls 收到大量无用的文件变更通知。
+  // (This key replaces rather than appends, so Zed's defaults are repeated.
+  //  target/ is 4.3G / 14804 files and .codegraph 1.3G in large Java monorepos.)
+  "file_scan_exclusions": [
+    "**/.git",
+    "**/.svn",
+    "**/.hg",
+    "**/.jj",
+    "**/.sl",
+    "**/.repo",
+    "**/CVS",
+    "**/.DS_Store",
+    "**/Thumbs.db",
+    "**/.classpath",
+    "**/.settings",
+    "**/target",
+    "**/.codegraph"
+  ],
+  // Java: 手动放置的 lsp-proxy 二进制，跳过扩展的托管下载(下载走代理到不了 GitHub)
+  // (Java: manually-placed lsp-proxy binary, skip the extension's managed download)
+  // Go debugger: 指向手动安装的 delve，避免 Zed 去 GitHub 查/下载导致 403 限流
+  // (Go debugger: use manually-installed delve to avoid GitHub rate-limit 403)
+  "dap": {
+    "Delve": {
+      "binary": "/home/picong/go/bin/dlv"
+    }
+  },
+  "lsp": {
+    "jdtls": {
+      "settings": {
+        "lsp_proxy_path": "/home/picong/.local/share/zed-java-manual/java-lsp-proxy",
+        // lombok jar 也走托管下载，关了 check_updates 后须手动指定(取自本地 m2)
+        // (lombok jar is also managed-downloaded; with check_updates off it must be set manually, taken from local m2)
+        "lombok_jar": "/home/picong/.local/share/zed-java-manual/lombok.jar",
+        "check_updates": "never",
+
+        // 注意：堆大小(max_memory/min_memory)不能写在这里。扩展的
+        // build_jdtls_launch_args() 在 PATH 上发现 jdtls 时第一行就 return，
+        // 只保留启动器路径，这两个键连同 -jar/-data 一起被丢弃。
+        // 堆与 GC 参数统一在 ~/.local/bin/jdtls 里设置。
+        // (max_memory/min_memory do NOT work here: with a jdtls on PATH the
+        //  extension returns early and drops them. Tuning lives in the wrapper.)
+
+        // 缩小 jdtls 的工作集。这个仓库 98 个 Maven module / 10222 个 java 文件，
+        // 索引落盘阶段历史上 OOM 过，少扫一点直接降低堆峰值。
+        // (Shrink the working set: 98 modules / 10222 java files, and the index
+        //  save step has OOM'd before.)
+        "java.import.exclusions": [
+          // jdtls 的默认值，显式列出以免被覆盖掉
+          // (jdtls' own defaults, repeated so we don't clobber them)
+          "**/node_modules/**",
+          "**/.metadata/**",
+          "**/archetype-resources/**",
+          "**/META-INF/maven/**",
+          // Maven 输出目录：4.3G / 14804 个文件，其中 0 个 .java，
+          // 也没有任何 .classpath 把 target 下的 jar 列为依赖(只作为 output 路径)。
+          // (Maven output: 4.3G, 14804 files, zero .java, and no .classpath lists
+          //  anything under target as a dependency — only as an output path.)
+          "**/target/**",
+          // 本地工具缓存，不是项目源码 (local tooling caches, not project source)
+          "**/.codegraph/**"
+        ],
+        // Eclipse 资源过滤器：让这些目录压根不进 workspace 资源树，
+        // 比 import.exclusions 更早一层拦掉文件变更通知。
+        // (Eclipse resource filters: keep these out of the workspace resource tree
+        //  entirely, cutting change notifications one layer earlier.)
+        "java.project.resourceFilters": ["node_modules", "\\.git", "target", "\\.codegraph"],
+        // 不去下载/反编译第三方源码，省堆也省网络 (skip third-party sources)
+        "java.maven.downloadSources": false,
+        "java.eclipse.downloadSources": false,
+        // Zed 的 code_lens 默认就是 off，服务端也别算 (Zed defaults code_lens off)
+        "java.referencesCodeLens.enabled": false,
+        "java.implementationCodeLens": "none",
+        // 无 Gradle 项目，关掉省一个 importer 及其常驻状态
+        // (no Gradle projects here; drop the importer)
+        "java.import.gradle.enabled": false
+      }
+    },
+    // Go: 显式指向手动安装的 gopls，避免 Zed 环境捕获拿不到 PATH 时找不到二进制
+    // (Go: point at the manually-installed gopls in case Zed's env capture misses PATH)
+    "gopls": {
+      "binary": {
+        "path": "/home/picong/go/bin/gopls"
+      }
+    }
+  },
+  "ui_font_size": 17.0,
+  "buffer_font_size": 16.0,
+  "theme": {
+    "mode": "dark",
+    "light": "One Light",
+    "dark": "Ayu Dark"
+  },
+}

@@ -1,0 +1,308 @@
+// Zed keymap — 从 ~/.ideavimrc (IdeaVim) 迁移而来
+// 目标：让你在 IntelliJ IDEA 里的 IdeaVim 肌肉记忆无缝迁移到 Zed。
+// base_keymap 已设为 "JetBrains"（见 settings.json），非 vim 键位也贴近 IDEA。
+//
+// 重要背景：Zed 没有「编辑器行为插件」系统（扩展只能加语言/主题/调试器），
+// 所以 surround / commentary / exchange / ReplaceWithRegister / multiple-cursors
+// 这些 ideavimrc 里的插件不是"装插件"，而是 Zed vim 模式已内置的原生能力：
+//   set surround            → 原生 ys/cs/ds（默认，无需绑定）
+//   set commentary          → 原生 gcc/gc（默认）
+//   set exchange            → 原生 vim::Exchange（普通 cx{motion}/cxx 默认；可视 X 见下）
+//   set ReplaceWithRegister → 原生 gR/gRR（默认，并给 gs 别名见下）
+//   set multiple-cursors    → 原生多光标 gl/gL/ga/g>/g<（默认）
+//   flash / ss=flash.search → 原生 Sneak：s / S 双字符跳转
+//
+// ⚠️ 无对应能力、已省略的 ideavimrc 映射（Zed 暂无等价 action）：
+//   gts GotoSuperMethod、ght/ghm 类型/方法 Hierarchy、gj/gk Slice、
+//   （ghc CallHierarchy 已可用，Zed 1.19.2 起有 call_hierarchy，见下方"调用层级"；
+//     ght/ghm 因 Zed 未实现 textDocument/prepareTypeHierarchy 而仍然无解）
+//   gt GotoTest、<leader>gg Generate、<leader>i 大小写切换后插入、
+//   CamelCaseMotion (<leader>w/b/e/ge)、vam/dam/yam/cam 方法文本对象、
+//   Invert(!) 反义词切换。需要的话可另想办法。
+[
+  // ====================================================================
+  // 1) 插入模式：jj → Esc（ideavimrc: inoremap jj <ESC>）
+  // ====================================================================
+  {
+    "context": "vim_mode == insert",
+    "bindings": {
+      "j j": "vim::NormalBefore"
+    }
+  },
+
+  // ====================================================================
+  // 2) flash（标签跳转）—— 普通 + 可视模式
+  //    ideavimrc: ss=<Action>(flash.search) → Zed 原生 HelixJumpToWord
+  //    ss = 在屏幕所有词首打标签字母，按标签一键跳过去（flash 招牌体验）
+  //    保留单个 s=substitute 默认不动，只用两键序列 ss 触发。
+  // ====================================================================
+  {
+    "context": "vim_mode == normal || vim_mode == visual",
+    "bindings": {
+      "s s": "vim::HelixJumpToWord"
+    }
+  },
+
+  // ====================================================================
+  // 3) exchange（交换两处文本）—— 可视模式 X
+  //    ideavimrc: set exchange。普通模式 cx{motion}/cxx 是 Zed 原生默认。
+  //    用法：cxiw 到第一个词，再 cxiw 到第二个词 → 两者互换。
+  // ====================================================================
+  {
+    "context": "vim_mode == visual",
+    "bindings": {
+      "shift-x": "vim::Exchange"
+    }
+  },
+
+  // ====================================================================
+  // 4) 普通/可视模式主键位（对齐 ideavimrc 的 g 前缀 & <leader> 映射）
+  // ====================================================================
+  {
+    "context": "vim_mode == normal || vim_mode == visual",
+    "bindings": {
+      // ---- 覆盖默认动作 ----
+      // U = Redo（ideavimrc: map U <C-R>）
+      "shift-u": "vim::Redo",
+      // H / L = 向左 / 向右切换 tab
+      "shift-h": "pane::ActivatePreviousItem",
+      "shift-l": "pane::ActivateNextItem",
+
+      // ---- g 前缀：跳转 / LSP / 导航 ----
+      // gtd GotoDeclaration
+      "g t d": "editor::GoToDefinition",
+      // gti GotoImplementation
+      "g t i": "editor::GoToImplementation",
+      // gtf GotoFile
+      "g t f": "file_finder::Toggle",
+      // gl QuickJavaDoc（悬浮文档）
+      "g l": "editor::Hover",
+      // gL QuickImplementations
+      "g shift-l": "editor::GoToImplementation",
+      // gy ShowErrorDescription（诊断悬浮）
+      "g y": "editor::Hover",
+      // gi ShowIntentionActions（代码操作/意图）
+      "g i": "editor::ToggleCodeActions",
+      // gp ParameterInfo（参数签名）
+      "g p": "editor::ShowSignatureHelp",
+      // grn RenameElement（重命名）
+      "g r n": "editor::Rename",
+      // gn GotoClass（按名跳类/文件）
+      "g n": "file_finder::Toggle",
+      // gm GotoSymbol（按名跳符号）
+      "g m": "project_symbols::Toggle",
+      // gf FindInPath（全局搜索）
+      "g f": "pane::DeploySearch",
+      // g' ReplaceInPath（全局替换 → 打开搜索面板）
+      "g '": "pane::DeploySearch",
+      // gw RecentFiles（最近文件切换）
+      "g w": "tab_switcher::Toggle",
+      // gx CloseAllEditorsButActive（关闭其它标签）
+      "g x": "pane::CloseInactiveItems",
+      // 注意：gs 保留 Zed 默认（outline::Toggle 查看 symbols），不再占用。
+      // ReplaceWithRegister 直接用原生 gR / gRR 即可（无需别名）。
+      // 方法跳转：ideavimrc 的 ]] / [[ (MethodDown/MethodUp) → Zed ]m / [m
+      "] ]": ["workspace::SendKeystrokes", "] m"],
+      "[ [": ["workspace::SendKeystrokes", "[ m"],
+      // 引用跳转（IDEA F3/Shift+F3 风格）：原地跳到下/上一处引用
+      // 需先把光标停在某个符号上（Zed 会高亮同名引用），再用 ]r/[r 逐个跳
+      "] r": "editor::GoToNextReference",
+      "[ r": "editor::GoToPreviousReference",
+
+      // ---- 调用层级（ideavimrc: ghc CallHierarchy）----
+      // Zed 1.19.2 起有了 call_hierarchy，JDTLS 侧 callHierarchyProvider 本来就支持。
+      // ghc = 谁调用了我（incoming），gho = 我调用了谁（outgoing）。
+      // 面板打开后可用 call_hierarchy::ToggleDirection 原地切换进/出方向。
+      // 注意：类型层级(ght)/方法层级(ghm) 仍然没有 —— Zed 客户端未实现
+      // textDocument/prepareTypeHierarchy，跟 JDTLS 无关，只能回 IDEA 看。
+      // (Call hierarchy landed in Zed 1.19.2; type hierarchy is still a client-side gap.)
+      "g h c": "call_hierarchy::ShowIncomingCalls",
+      "g h o": "call_hierarchy::ShowOutgoingCalls",
+
+      // ---- <leader>(space) 前缀 ----
+      // <leader>d Debug
+      "space d": "debugger::Start",
+      // <leader>c Stop
+      "space c": "debugger::Stop",
+      // <leader>bb ToggleLineBreakpoint
+      "space b b": "editor::ToggleBreakpoint",
+      // <leader>ss ShowUsages / <leader>u FindUsages / <leader>h HighlightUsages
+      "space s s": "editor::FindAllReferences",
+      "space u": "editor::FindAllReferences",
+      "space h": "editor::FindAllReferences",
+      // <leader>sp FileStructurePopup（当前文件结构）
+      "space s p": "outline::Toggle",
+      // <leader>n ReSharperNavigateTo（快速打开）
+      "space n": "file_finder::Toggle",
+      // <leader>sa 全选（ideavimrc: ggVG）
+      "space s a": "editor::SelectAll",
+      // <leader>j / <leader>k 下/上一个错误
+      "space j": "editor::GoToDiagnostic",
+      "space k": "editor::GoToPreviousDiagnostic",
+      // <leader>l ReformatCode（格式化）
+      "space l": "editor::Format",
+      // <leader>a Annotate（git blame）
+      "space a": "editor::ToggleGitBlame",
+      // <leader>o ShowFilePath（复制路径）
+      "space o": "editor::CopyPath",
+      // <leader>v Vcs.QuickListPopupAction（git 面板）
+      "space v": "git_panel::ToggleFocus",
+      // <leader>x HideAllWindows（收起所有 dock）
+      "space x": "workspace::CloseAllDocks",
+      // <leader>z ToggleDistractionFreeMode（居中/沉浸布局）
+      "space z": "workspace::ToggleCenteredLayout",
+      // <leader>` SelectInProjectView（在文件树中定位当前文件）
+      "space `": "pane::RevealInProjectPanel",
+      // ---- Go struct 标签 ----
+      // 这些任务里的脚本读的是磁盘上的文件，buffer 里未保存的字段它看不到，
+      // 所以每个键先 ctrl-s 存盘再触发任务（否则刚敲的字段会被漏掉，
+      // 表现就是"快捷键有时候没效果"）。ctrl-s = workspace::Save (JetBrains keymap)。
+      //   gt 全套 form/json/xml/binding    gj 只 json
+      //   gm json+binding（JSON DTO）      gM form+binding+time_format（query DTO）
+      // 注意 gm 是 gt 的子集：已按过 gt 的 struct 再按 gm 不会有改动，属正常。
+      //   gc 现场输入 spec                 gf 同 gc 但只作用于光标那一行
+      //   gd 清掉整个 struct 的标签
+      "space g t": ["workspace::SendKeystrokes", "ctrl-s space g shift-t"],
+      "space g j": ["workspace::SendKeystrokes", "ctrl-s space g shift-j"],
+      "space g m": ["workspace::SendKeystrokes", "ctrl-s space g shift-n"],
+      "space g shift-m": ["workspace::SendKeystrokes", "ctrl-s space g shift-f"],
+      "space g c": ["workspace::SendKeystrokes", "ctrl-s space g shift-c"],
+      "space g f": ["workspace::SendKeystrokes", "ctrl-s space g shift-w"],
+      "space g d": ["workspace::SendKeystrokes", "ctrl-s space g shift-d"],
+      // 上面转发到的真实任务键（大写字母那一层，不直接按）
+      "space g shift-t": ["task::Spawn", { "task_name": "Add validator tags" }],
+      "space g shift-j": ["task::Spawn", { "task_name": "Add json tags" }],
+      "space g shift-n": ["task::Spawn", { "task_name": "Add json binding tags" }],
+      "space g shift-f": ["task::Spawn", { "task_name": "Add form tags (time_format)" }],
+      "space g shift-c": ["task::Spawn", { "task_name": "Add custom tags" }],
+      "space g shift-w": ["task::Spawn", { "task_name": "Add custom tags (this field)" }],
+      "space g shift-d": ["task::Spawn", { "task_name": "Clear struct tags" }],
+      // <leader>J Join（合并行）
+      "shift-j": "editor::JoinLines"
+    }
+  },
+
+  // ====================================================================
+  // 4b) 引用跳转 IDEA 风格键位（Ctrl+Alt+↓ / Ctrl+Alt+↑），任意模式可用
+  // ====================================================================
+  {
+    "context": "Editor",
+    "bindings": {
+      "ctrl-alt-down": "editor::GoToNextReference",
+      "ctrl-alt-up": "editor::GoToPreviousReference"
+    }
+  },
+
+  // ====================================================================
+  // 4c) multibuffer（space ss 引用面板）里跳引用 —— 纯本地，零 LSP，秒跳
+  //    !is_singleton = 当前是多缓冲区（引用/诊断/搜索结果面板），
+  //    此处 ]r/[r 覆盖普通编辑器的 GoToNext/PrevReference（那个每次都请求 LSP，慢）。
+  //    在面板里直接在各引用块（excerpt）之间本地移动，不再问语言服务器。
+  //    Ctrl+Alt+↓/↑ 同理走本地。
+  // ====================================================================
+  {
+    //    ⚠️ 必须带 vim_mode != insert：裸 Editor context 在插入模式也生效，
+    //    会让 [ 变成待定前缀，打 [ 要等超时才补 ]（( 无前缀绑定所以立刻补）。
+    "context": "Editor && !is_singleton && vim_mode != insert",
+    "bindings": {
+      "] r": "editor::MoveToStartOfNextExcerpt",
+      "[ r": "editor::MoveToStartOfExcerpt",
+      "ctrl-alt-down": "editor::MoveToStartOfNextExcerpt",
+      "ctrl-alt-up": "editor::MoveToStartOfExcerpt"
+    }
+  },
+
+  // ====================================================================
+  // 5) 终端：<C-t> ActivateTerminalToolWindow（普通 + 插入模式）
+  // ====================================================================
+  {
+    "context": "vim_mode == normal || vim_mode == insert",
+    "bindings": {
+      "ctrl-t": "terminal_panel::ToggleFocus"
+    }
+  },
+
+  // ====================================================================
+  // 6) git 变更导航（ideavimrc: ]c / [c VcsShowNext/PrevChangeMarker）
+  // ====================================================================
+  {
+    "context": "vim_mode == normal",
+    "bindings": {
+      "] c": "editor::GoToHunk",
+      "[ c": "editor::GoToPreviousHunk"
+    }
+  },
+
+  // ====================================================================
+  // 7) 折叠（ideavimrc: zC/zO 递归折叠/展开）
+  // ====================================================================
+  {
+    "context": "VimControl && vim_mode == normal",
+    "bindings": {
+      "z shift-c": "editor::FoldRecursive",
+      "z shift-o": "editor::UnfoldRecursive"
+    }
+  },
+
+  // ====================================================================
+  // 8) 文件树（project panel）—— NERDTree 风格键位
+  //    ideavimrc: set NERDTree。补齐常用文件操作。
+  // ====================================================================
+  {
+    "context": "ProjectPanel && not_editing",
+    "bindings": {
+      "o": "project_panel::Open",
+      "enter": "project_panel::Open",
+      "i": "project_panel::OpenSplitHorizontal",
+      "s": "project_panel::OpenSplitVertical",
+      "t": "project_panel::OpenPermanent",
+      "p": "project_panel::SelectParent",
+      "shift-r": "project_panel::CollapseAllEntries",
+      "m a": "project_panel::NewFile",
+      "m d": "project_panel::NewDirectory",
+      "m m": "project_panel::Rename",
+      "r": "project_panel::Rename",
+      "shift-d": "project_panel::Delete",
+      "x": "project_panel::Cut",
+      "c": "project_panel::Copy",
+      "v": "project_panel::Paste",
+      "shift-i": "project_panel::ToggleHideHidden"
+    }
+  },
+
+  // ====================================================================
+  // 9) 搜索栏：一次性选中所有匹配（多光标批量编辑）
+  // ====================================================================
+  {
+    "context": "BufferSearchBar && !in_replace",
+    "bindings": {
+      "alt-enter": "search::SelectAllMatches"
+    }
+  },
+
+  // ====================================================================
+  // 10) Copy Reference（IDEA: Ctrl+Alt+Shift+C 拷贝全限定名）
+  //     类光标 → com.xxx.ClassA；成员光标 → com.xxx.ClassA#methodA
+  //     实现：task::Spawn 调 scripts/copy-reference.sh，用 $ZED_FILE / $ZED_SYMBOL
+  // ====================================================================
+  {
+    "context": "Editor",
+    "bindings": {
+      "ctrl-alt-shift-c": ["task::Spawn", { "task_name": "Copy Reference" }]
+    }
+  },
+
+  // ====================================================================
+  // 11) Go struct 标签（vscode-go "Go: Add Tags" 等价）
+  //     光标停在 struct 内（或 type 行 / 上方文档注释行）→ 批量补标签。
+  //     插入模式也能用，刚打完字段不用退回普通模式。
+  //     T = Tags，J = Json only。见 tasks.json "Add validator tags"。
+  // ====================================================================
+  {
+    "context": "Editor && extension == go",
+    "bindings": {
+      "ctrl-alt-shift-t": ["task::Spawn", { "task_name": "Add validator tags" }],
+      "ctrl-alt-shift-j": ["task::Spawn", { "task_name": "Add json tags" }]
+    }
+  }
+]

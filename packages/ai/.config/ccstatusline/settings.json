@@ -1,0 +1,65 @@
+{
+  "version": 3,
+  "lines": [
+    [
+      {
+        "id": "21212a3d-4e01-4d99-b801-d8af3ce3b085",
+        "type": "model"
+      },
+      {
+        "id": "fbd0b9ed-89b6-4aff-88cc-369cc4621188",
+        "type": "context-percentage-usable"
+      },
+      {
+        "id": "1",
+        "type": "total-speed"
+      },
+      {
+        "id": "5",
+        "type": "git-branch"
+      },
+      {
+        "id": "95e8078b-01c5-46e3-9854-484517d5edff",
+        "type": "thinking-effort"
+      },
+      {
+        "id": "3bf3e904-ace7-4818-a3e5-25f26d506894",
+        "type": "tokens-total"
+      },
+      {
+        "id": "bba0a796-9958-490f-bcd8-a7713f7d64b3",
+        "type": "vim-mode",
+        "metadata": {
+          "nerdFont": "true",
+          "format": "word"
+        }
+      }
+    ],
+    [],
+    []
+  ],
+  "flexMode": "full-until-compact",
+  "compactThreshold": 60,
+  "colorLevel": 3,
+  "defaultPadding": " ",
+  "inheritSeparatorColors": false,
+  "overrideForegroundColor": "black",
+  "globalBold": false,
+  "minimalistMode": false,
+  "powerline": {
+    "enabled": false,
+    "separators": [
+      ""
+    ],
+    "separatorInvertBackground": [
+      false
+    ],
+    "startCaps": [
+      "❤"
+    ],
+    "endCaps": [],
+    "theme": "tokyonight",
+    "autoAlign": true,
+    "continueThemeAcrossLines": true
+  }
+}

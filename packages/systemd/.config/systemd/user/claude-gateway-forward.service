@@ -1,0 +1,12 @@
+[Unit]
+Description=Forward loopback 3200 to the LAN Claude gateway (loopback http for Claude Desktop)
+After=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/socat TCP-LISTEN:3200,bind=127.0.0.1,fork,reuseaddr TCP:192.168.1.99:3200
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=default.target

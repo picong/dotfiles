@@ -1,0 +1,7 @@
+{
+	"name": "image-auto-compact",
+	"version": "1.0.0",
+	"description": "Automatically compact images after LLM analysis to reduce token consumption (LLM 分析图片后自动压缩以减少 token 消耗)",
+	"main": "index.ts",
+	"dependencies": {}
+}

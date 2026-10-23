@@ -1,0 +1,28 @@
+{
+  "gin form field": {
+    "prefix": "gtag",
+    "description": "字段 + form/json/xml/binding 标签（tag 名输一次，三处联动）",
+    "body": [
+      "${1:Field} ${2:string} `form:\"${3:field}\" json:\"$3\" xml:\"$3\" binding:\"required\"`"
+    ]
+  },
+  "gin validator tags only": {
+    "prefix": "gtags",
+    "description": "只要标签本身，光标已在字段类型后",
+    "body": [
+      "`form:\"${1:tag}\" json:\"$1\" xml:\"$1\" binding:\"required\"`"
+    ]
+  },
+  "gin json field": {
+    "prefix": "jtag",
+    "description": "字段 + json/binding，JSON DTO 常用",
+    "body": [
+      "${1:Field} ${2:string} `json:\"${3:field}\" binding:\"required\"`"
+    ]
+  },
+  "ZZ snippet probe": {
+    "prefix": "zzprobe",
+    "description": "探针：能补出来就说明 snippet 通路正常，可删",
+    "body": ["// snippet OK"]
+  }
+}

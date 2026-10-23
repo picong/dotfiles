@@ -1,0 +1,4 @@
+#!/bin/bash
+export QT_QPA_PLATFORM=xcb
+export XDG_SESSION_TYPE=x11
+/opt/wemeet/wemeetapp.sh "$@"

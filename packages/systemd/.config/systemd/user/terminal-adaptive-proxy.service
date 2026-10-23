@@ -1,0 +1,12 @@
+[Unit]
+Description=Adaptive terminal proxy with direct fallback
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/verge-mihomo -d %h/.local/share/terminal-adaptive-proxy -f %h/.config/terminal-adaptive-proxy/config.yaml
+Restart=always
+RestartSec=1
+
+[Install]
+WantedBy=default.target

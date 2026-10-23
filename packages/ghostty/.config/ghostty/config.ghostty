@@ -1,0 +1,27 @@
+font-family = Maple Mono
+font-size = 13.5
+
+# Disable single-instance so each launch is its own process and re-reads
+# config. NOTE: a command-line --gtk-single-instance=true overrides this,
+# so the .desktop entry must NOT force it. (关闭单实例：让每次启动都是独立
+# 进程并重读配置；注意命令行 flag 会覆盖此项，故 .desktop 不能强制开启)
+gtk-single-instance = false
+
+# Sharpen text rendering on Linux (Linux 下锐化字体渲染)
+# NOTE: font-thicken is macOS-only and does nothing on Linux/FreeType,
+# so the only effective knob here is hinting. (font-thicken 仅 macOS 有效，
+# Linux 走 FreeType，唯一有效杠杆是 hinting)
+# Drop "light" → full hinting: edges snap to the pixel grid, crisper text.
+# light hinting "preserves glyph shapes" (softer); full hinting is sharper.
+# (去掉 light → full hinting：边缘对齐像素网格更锐；light 保字形原貌偏软)
+freetype-load-flags = hinting,no-force-autohint,no-monochrome,autohint,no-light
+
+# Hide window decoration / title bar (隐藏窗口装饰/标题栏)
+# window-decoration = false
+
+# Background 80% transparent (背景80%透明)
+# background-opacity = 0.95
+
+# Cursor trail effect via custom shader (光标拖尾特效)
+custom-shader = shaders/cursor_trail.glsl
+custom-shader-animation = true
